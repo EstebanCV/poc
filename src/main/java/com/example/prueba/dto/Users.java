@@ -18,19 +18,11 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Users implements UserDetails {
     @Id
-    //@GeneratedValue(strategy = GenerationType.UUID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Nombre no puede estar vacio")
     @Column(name = "name")
     private String name;
-
-    // '^' inicio de la cadena
-    // 'w-' palabra o caracter -
-    // '+' una o mas
-    // '.' algun caracter
-    // '{2,4}' de 2 a 4
-    // '$' termino de la linea
     @Email(message = "Email incorrecto", regexp = "^[\\w-\\.]+@([a-z]+\\.)+[a-z]{2,4}$", flags = Pattern.Flag.CASE_INSENSITIVE)
     @NotEmpty(message = "Email no puede estar vacio")
     @Column(name = "email")
@@ -51,8 +43,6 @@ public class Users implements UserDetails {
     @Column(name = "active")
     private String active = "N";
 
-    //relacion de 1 a muchos en contactos
-    // all todas las acciones 'crear, actualizar, eliminar' iran en cascada de padre a hijo
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="id_user")
     @NotEmpty(message = "Telefonos no puede estar vacio")

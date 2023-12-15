@@ -10,14 +10,11 @@ import com.example.prueba.security.JwtTokenConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 @RestController
 public class AuthControllerImpl implements AuthController {
@@ -39,8 +36,6 @@ public class AuthControllerImpl implements AuthController {
     @Override
     public ResponseEntity<?> getToken(AuthRequest request) {
         LOG.info("Inicio generacion token");
-
-        //valida credenciales y retorna el user
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
@@ -56,19 +51,4 @@ public class AuthControllerImpl implements AuthController {
         LOG.info("Fin generacion token");
         return ResponseEntity.ok().body(new Response<>("Token exitoso", new AuthResponse(u.getEmail(), token)));
     }
-
-    /*@Override
-    public ResponseEntity<?> logout(String headerToken) {
-        LOG.info("Inicio logout");
-        Optional<Users> user = userRepo.findById(jwtTokenConfig.getUserConect().getId());
-
-        if(user.isPresent()) {
-            util.validateToken(user.get().getToken(), headerToken);
-            userRepo.updateLogout(user.get().getId(), util.getDate());
-            LOG.info("Fin logout");
-            return ResponseEntity.ok().body(new Response<>("Logout exitoso", null));
-        } else {
-            return new ResponseEntity<>(new Response<>("Usuario no existe", null), HttpStatus.NOT_FOUND);
-        }
-    }*/
 }

@@ -16,13 +16,13 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query("SELECT u.id FROM Users u WHERE u.email = ?1")
     String validateEmailExist(String email);
 
-    @Transactional //para confirmar o revertir la transaccion en casode error
-    @Modifying  //para manejar insert, update, delete
+    @Transactional
+    @Modifying
     @Query("UPDATE Users u SET u.token = ?1, u.active = 'Y', u.lastLogin = ?2 WHERE u.id = ?3")
     void updateToken(String token, String fecha, Long id);
 
-    @Transactional //para confirmar o revertir la transaccion en casode error
-    @Modifying  //para manejar insert, update, delete
+    @Transactional
+    @Modifying
     @Query("UPDATE Users u SET u.token = '', u.active = 'N', u.modified = ?2 WHERE u.id = ?1")
     void updateTokenExpired(Long id, String fecha);
 

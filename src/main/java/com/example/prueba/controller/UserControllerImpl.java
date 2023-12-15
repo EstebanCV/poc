@@ -53,7 +53,6 @@ public class UserControllerImpl implements UserController {
         util.completeCreateUser(users);
         Users u = userRepo.save(users);
 
-        //valida credenciales y retorna el user
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     users.getEmail(),

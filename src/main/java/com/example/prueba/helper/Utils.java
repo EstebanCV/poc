@@ -15,7 +15,6 @@ import java.util.*;
 @Component
 public class Utils {
 
-    //BCrypt es utilizado por spring security para validar, codificar y decodificar pass
     public String encodePassword(String pass){
         BCryptPasswordEncoder passEncode = new BCryptPasswordEncoder();
         return passEncode.encode(pass);
@@ -68,33 +67,26 @@ public class Utils {
         Collection<String> data = new ArrayList<>();
         contacts.forEach(x -> data.add(x.getNumber()));
 
-        //evalua si al agregar contacto ya se encuentra ingresado
         if(null != newContact && data.stream().filter(x -> newContact.getNumber().equals(x)).count() > 0)
             throw new ValidationException("Telefono ingresado ya se encuentra asociado a tu usuario");
 
-        //filtra la lista existente para saber q no hay duplicados
         if(data.stream().distinct().toList().size() != contacts.size())
             throw new ValidationException("Telefonos duplicados en el mismo registro");
 
-        //crea nueva lista para validar el contacto nuevo
         if(null != newContact){
             data.clear();
             data.add(newContact.getNumber());
         }
 
-        //trae lista de uuid q tienen asociado el numero del contacto ingresado
         List<String> uuid = contactRepo.validateContactExist(data);
 
-        //valida PUT - verifica q contactos no esten asociado a otros id
         if (uuid.size() > 0 && null != idReq && uuid.stream().filter(x -> !x.equals(idReq)).count() > 0)
             throw new ValidationException("Telefono se encuentra registrado a otro usuario");
 
-        //valida resto de metodos, si la lista tiene datos el contacto ya esta registrado
         if(uuid.size() > 0 && null == idReq)
             throw new ValidationException("Telefono se encuentra registrado a otro usuario");
     }
 
-    //Valida expiracion del token cada vez q se realiza una peticion
     public void validateTokenExpired(HttpServletRequest request, UsersRepository userRepo) {
         if(null != request.getHeader("authorization") && !request.getHeader("authorization").isEmpty()){
             Optional<Users> users = userRepo.findByToken(

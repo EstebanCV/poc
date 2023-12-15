@@ -32,7 +32,6 @@ public class JwtTokenConfig extends OncePerRequestFilter {
     @Value("${jwt.expiration}")
     private Long JWT_EXPIRATION;
 
-    // se ejecuta para cada solicitud, analiza y valida JWT por el token entrante
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getAccessToken(request);
@@ -56,7 +55,6 @@ public class JwtTokenConfig extends OncePerRequestFilter {
             return null;
     }
 
-    //valida token jwt
     private boolean validateAccessToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key()).build().parse(token);
@@ -73,16 +71,14 @@ public class JwtTokenConfig extends OncePerRequestFilter {
         return false;
     }
 
-    //obtiene el users mediante el token
     private UserDetails getUserDetails(String token) {
         Users userDetails = new Users();
         String subject = Jwts.parserBuilder()
-                .setSigningKey(key()).build()//se pasa la clave de firma, q es la llave secreta
-                .parseClaimsJws(token)//pasa token para ser analizado
+                .setSigningKey(key()).build()
+                .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
 
-        //sacar el asunto q es ID + email
         String[] jwtSubject = subject.split(",");
 
         userDetails.setId(Long.valueOf(jwtSubject[0]));
@@ -91,14 +87,13 @@ public class JwtTokenConfig extends OncePerRequestFilter {
         return userDetails;
     }
 
-    // genera el token
     public String generateAccessToken(Users u) {
         return Jwts.builder()
-                .setSubject(String.format("%s,%s", u.getId(), u.getEmail())) //asunto
-                .setIssuer("Esteban") //emisor
-                .setIssuedAt(new Date()) //fecha actual
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION)) //expiracion sera hora actual en milisegundos + 3 min
-                .signWith(key(), SignatureAlgorithm.HS256) //indica algoritmo a utilizar y clave secreta
+                .setSubject(String.format("%s,%s", u.getId(), u.getEmail()))
+                .setIssuer("Esteban")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
+                .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -106,7 +101,6 @@ public class JwtTokenConfig extends OncePerRequestFilter {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
     }
 
-    //obtiene el user logeado del contexto de seguridad de spring
     public Users getUserConect(){
         return (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }

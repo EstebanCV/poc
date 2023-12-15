@@ -22,7 +22,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
-//configurar la seguridad de spring
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
@@ -38,11 +37,9 @@ public class WebSecurityConfig {
         this.utils = utils;
     }
 
-    //configuramos si queremos a exigir a todos autenticacion
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()) //proteccion para ataques maliciosos
-                //maneja excepciones de autenticacion
+        http.csrf(csrf -> csrf.disable())
             .exceptionHandling(exception -> exception.authenticationEntryPoint(
                 (request, response, ex) -> {
                     utils.validateTokenExpired(request, userRepo);
@@ -51,11 +48,9 @@ public class WebSecurityConfig {
                     response.getWriter().write("{ \"mensaje\" : \"token de acceso invalido o caducado\" }");
                 }
             ))
-                //nunca creara una session xq no la usara
             .sessionManagement(session -> session.sessionCreationPolicy(
                     SessionCreationPolicy.STATELESS
             ))
-                //valida path q necesitan seguridad
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(antMatcher("/auth/token")).permitAll()
                 .requestMatchers(antMatcher("/demo/users/registro")).permitAll()
@@ -65,18 +60,13 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
             );
 
-        //permite cualquier solicitud del mismo origen 'consola h2'
         http.headers(header -> header.frameOptions(frame -> frame.sameOrigin()));
-        // proveedor de autenticacion para recuperar al usuario logueado
         http.authenticationProvider(authenticationProvider());
-        //agrega un filtro, en este caso el aplicado por el jwt
         http.addFilterBefore(jwtTokenConfig, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // proveedor de autenticacion para recuperar al usuario logueado
-    //devuelve la instancia de una clase
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -87,8 +77,6 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-    //creo objeto userDetail y utilizo el modo loadUser para verificacion/autenticacion de el user ingresado en el login
-    // bean devuelve la instancia de una clase
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
@@ -100,13 +88,11 @@ public class WebSecurityConfig {
         };
     }
 
-    //se agrega al proveedor de autenticacion una codificacion de contraseña para verificar credenciales
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    //para validar credenciales y retornar al user logeado
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();

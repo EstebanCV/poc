@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-//extension para evitar utilizar mockito.open mocks 'busca instancias de mocks para inicializarlas'
 @ExtendWith(MockitoExtension.class)
 class UserControllerImplTest {
 

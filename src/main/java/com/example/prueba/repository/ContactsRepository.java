@@ -10,13 +10,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public interface ContactsRepository extends JpaRepository<Contacts, Long> {
 
-    @Transactional //para confirmar o revertir la transaccion en casode error
-    @Modifying //para manejar no solo select si no insert, update, delete
+    @Transactional
+    @Modifying
     void deleteByIdUser(Long id);
 
     @Query("SELECT c.idUser FROM Contacts c WHERE c.number IN :contacts")

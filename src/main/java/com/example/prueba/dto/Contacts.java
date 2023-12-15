@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Pattern;
 @Table(name = "contact")
 public class Contacts {
     @Id
-    //incremento automatico mediante la bd
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
