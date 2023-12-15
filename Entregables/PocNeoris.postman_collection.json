@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "eead6afa-5d43-4fe5-bc71-c6260cc58017",
+		"name": "PocNeoris",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27774527"
+	},
+	"item": [
+		{
+			"name": "Crear Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Esteban 2\",\r\n    \"email\": \"esteban@gmail.com\",\r\n    \"password\": \"Esteban30\",\r\n    \"contacts\": [\r\n        {\r\n            \"number\": \"999\",\r\n            \"cityCode\": \"888\",\r\n            \"countryCode\": \"888\"\r\n        },\r\n        {\r\n            \"number\": \"555\",\r\n            \"cityCode\": \"888\",\r\n            \"countryCode\": \"888\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8181/demo/users/registro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"demo",
+						"users",
+						"registro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyLGVzdGViYW5AY2NsYS5jb20iLCJpc3MiOiJFc3RlYmFuIiwiaWF0IjoxNzAyNjU1MzgwLCJleHAiOjE3MDI2NTU1NjB9.qzpaMoDwNJYfl6-oqYHrJE23W3VQUOy1-Aj_jv41STM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8181/demo/users/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"demo",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLGVzdGViYW5AaG90bWFpbC5jb20iLCJpc3MiOiJFc3RlYmFuIiwiaWF0IjoxNzAyNjUzNzMxLCJleHAiOjE3MDI2NTM5MTF9.krz_RKXOr93NsgwJ2Jas9q_4l_KMlRUjmnbY93STsg0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8181/demo/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"demo",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyLGVzdGViYW5AY2NsYS5jb20iLCJpc3MiOiJFc3RlYmFuIiwiaWF0IjoxNzAyNjU1MzgwLCJleHAiOjE3MDI2NTU1NjB9.qzpaMoDwNJYfl6-oqYHrJE23W3VQUOy1-Aj_jv41STM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Esteban edu\",\r\n    \"email\": \"esteban@gmail.com\",\r\n    \"password\": \"Esteban30\",\r\n    \"contacts\": [\r\n        {\r\n            \"number\": \"333\",\r\n            \"cityCode\": \"888\",\r\n            \"countryCode\": \"888\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8181/demo/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"demo",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contactos Por Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyLGVzdGViYW5AY2NsYS5jb20iLCJpc3MiOiJFc3RlYmFuIiwiaWF0IjoxNzAyNjUzODA4LCJleHAiOjE3MDI2NTM5ODh9.4Xtnurjh-Np78VgjT2wAyJMLIs2cOr-jlGM9utcP7EA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8181/demo/users/2/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"demo",
+						"users",
+						"2",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Contacto",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ZWEzNTQxNi1lNzY2LTQ4NmUtOTlmZi1kMzU0YWVlODY1ZjgsZXN0ZWJhbkBob3RtYWlsLmNvbSIsImlzcyI6IkVzdGViYW4iLCJpYXQiOjE2OTcwMDI1OTksImV4cCI6MTY5NzAwMjc3OX0.eoDqQ7woAnsLicx6qGU4O8Zr3VYhtzcf077bqUhma70",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": \"333\",\r\n    \"cityCode\": \"999\",\r\n    \"countryCode\": \"99\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8181/demo/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"demo",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerToken",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"esteban@gmail.com\",\r\n    \"password\": \"Esteban30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8181/auth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
